@@ -1,0 +1,4 @@
+local unsynced = {}
+unsynced.default_proxy = nil
+unsynced.ai_proxy = nil
+return unsynced
