@@ -23,3 +23,10 @@ vim.o.cmdheight = 2
 
 -- Set the height of the command-line window when opened with q:
 vim.o.cmdwinheight = 10
+
+-- Set autoread
+vim.o.autoread = true
+vim.opt.swapfile = false
+vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI", "FocusGained", "BufEnter"}, {
+  command = "checktime",
+})

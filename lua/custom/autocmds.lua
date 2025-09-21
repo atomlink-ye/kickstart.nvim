@@ -1,5 +1,8 @@
 local default_proxy = vim.g.default_proxy
 local function mask_password(url)
+  if url == nil then
+    return ""
+  end
   return string.gsub(url, "(https?://.-:)(.-)(@)", "%1********%3")
 end
 
