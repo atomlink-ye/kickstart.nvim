@@ -838,16 +838,35 @@ require("lazy").setup({
     name = "catppuccin",
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme("catppuccin-frappe")
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi("Comment gui=none")
+      local function set_background_from_system()
+        if vim.fn.has("mac") == 0 then
+          vim.o.background = "light"
+          return
+        end
+
+        local result = vim.fn.systemlist({ "defaults", "read", "-g", "AppleInterfaceStyle" })
+        if vim.v.shell_error ~= 0 then
+          vim.o.background = "light"
+          return
+        end
+
+        local appearance = table.concat(result, ""):lower()
+        if appearance:find("dark") then
+          vim.o.background = "dark"
+        else
+          vim.o.background = "light"
+        end
+      end
+
+      set_background_from_system()
     end,
     config = function()
       require("catppuccin").setup({
-        flavor = "frappe",
+        flavour = "auto",
+        background = {
+          light = "latte",
+          dark = "frappe",
+        },
         integrations = {
           neotree = true,
           noice = true,
@@ -855,6 +874,9 @@ require("lazy").setup({
           which_key = true,
         },
       })
+
+      vim.cmd.colorscheme("catppuccin")
+      vim.cmd.hi("Comment gui=none")
     end,
   },
   {
