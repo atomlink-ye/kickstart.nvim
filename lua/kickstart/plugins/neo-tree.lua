@@ -37,7 +37,7 @@ return {
       enable_refresh_on_write = true,
       use_libuv_file_watcher = true,
       follow_current_file = {
-        enabled = true,
+        enabled = false,
         leave_dirs_open = true,
       },
       hijack_netrw_behavior = "open_default",
