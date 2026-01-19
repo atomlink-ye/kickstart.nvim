@@ -70,6 +70,9 @@ return {
             local path = node:get_id()
             local relative_path = vim.fn.fnamemodify(path, ":.")
             vim.fn.setreg("+", relative_path, "c")
+            if vim.env.SSH_TTY or vim.env.TMUX then
+              require('vim.ui.clipboard.osc52').copy('+')({ relative_path })
+            end
             vim.notify("Path Copied: " .. relative_path, "info", { title = "NeoTree" })
           end,
           desc = "Copy Realative Path to Clipboard",
@@ -79,6 +82,9 @@ return {
             local node = state.tree:get_node()
             local path = node:get_id()
             vim.fn.setreg("+", path, "c")
+            if vim.env.SSH_TTY or vim.env.TMUX then
+              require('vim.ui.clipboard.osc52').copy('+')({ path })
+            end
             vim.notify("Path Copied: " .. path, "info", { title = "NeoTree" })
           end,
           desc = "Copy Absolute Path to Clipboard",
